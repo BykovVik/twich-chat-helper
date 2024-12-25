@@ -9,13 +9,14 @@ import (
 
 func PlaySound(soundFile string) error {
 
+	//check sound file
 	if _, err := os.Stat(soundFile); os.IsNotExist(err) {
 		return fmt.Errorf("файл %s не найден", soundFile)
 	}
 
 	var cmd *exec.Cmd
 
-	// Определяем команду в зависимости от операционной системы
+	//check OS
 	switch runtime.GOOS {
 	case "linux":
 		cmd = exec.Command("aplay", soundFile)
@@ -27,5 +28,6 @@ func PlaySound(soundFile string) error {
 		return fmt.Errorf("операционная система не поддерживается")
 	}
 
+	//play a beep
 	return cmd.Run()
 }
