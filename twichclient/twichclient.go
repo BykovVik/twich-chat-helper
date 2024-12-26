@@ -2,6 +2,7 @@ package twichclient
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"strconv"
 
@@ -9,11 +10,10 @@ import (
 )
 
 func StartTwichClient() {
-
 	//check type MAX_MESSAGE
 	maxMessageSum, maxNumError := strconv.Atoi(os.Getenv("MAX_MESSAGE"))
 	if maxNumError != nil {
-		fmt.Printf("Ошибка заполнения поля MAX_MESSAGE: %v\n", maxNumError)
+		log.Fatal("Ошибка заполнения поля MAX_MESSAGE: ", maxNumError)
 	}
 
 	//create twich client
@@ -29,6 +29,6 @@ func StartTwichClient() {
 	err := client.Connect()
 
 	if err != nil {
-		panic(err)
+		log.Fatal("Twich client connection error: ", err)
 	}
 }

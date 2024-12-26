@@ -2,6 +2,7 @@ package sound
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"os/exec"
 	"runtime"
@@ -11,7 +12,7 @@ func PlaySound(soundFile string) error {
 
 	//check sound file
 	if _, err := os.Stat(soundFile); os.IsNotExist(err) {
-		return fmt.Errorf("файл %s не найден", soundFile)
+		log.Fatal("Audio file not found: ", err)
 	}
 
 	var cmd *exec.Cmd
@@ -25,7 +26,7 @@ func PlaySound(soundFile string) error {
 	case "windows":
 		cmd = exec.Command("powershell", "-c", "Start-Process", "powershell", "-ArgumentList", "-c", fmt.Sprintf("Add-Type –AssemblyName presentationCore;[System.Media.SoundPlayer]::new('%s').PlaySync();", soundFile))
 	default:
-		return fmt.Errorf("операционная система не поддерживается")
+		log.Fatal("Operating System Not Supported")
 	}
 
 	//play a beep

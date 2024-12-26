@@ -1,13 +1,13 @@
 package twichclient
 
 import (
-	"fmt"
+	"log"
 	"t_chat/sound"
 )
 
 func PlaySound() {
-	err := sound.PlaySound("message.wav")
+	err := sound.PlaySound("./sound/message.wav")
 	if err != nil {
-		fmt.Printf("Ошибка при воспроизведении звука: %v\n", err)
+		log.Fatal("Audio playback error: ", err)
 	}
 }

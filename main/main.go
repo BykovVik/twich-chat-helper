@@ -1,25 +1,34 @@
 package main
 
 import (
-	"fmt"
+	"log"
+	"os"
 	"t_chat/twichclient"
 
 	"github.com/joho/godotenv"
 )
 
 func main() {
+	//log settings
+	logFile, err := os.OpenFile("app.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
 
-	//doenv conf
+	if err != nil {
+		log.Fatal("Log file could not be opened: ", err)
+	}
+
+	defer logFile.Close()
+	log.SetOutput(logFile)
+
+	//load base data
 	loadEnv()
 
-	//start chat listener
+	//start chat helper pacage
 	twichclient.StartTwichClient()
-
 }
 
 func loadEnv() {
 	err := godotenv.Load()
 	if err != nil {
-		fmt.Printf("Ошибка заполнения поля MAX_MESSAGE: %v\n", err)
+		log.Fatal(".env file upload error: ", err)
 	}
 }
