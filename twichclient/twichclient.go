@@ -21,6 +21,9 @@ func StartTwichClient() {
 
 	//message handler
 	client.OnPrivateMessage(func(message twitch.PrivateMessage) {
+		if message.Message == os.Getenv("STOP_WORDS") {
+			os.Exit(0)
+		}
 		PlaySound()
 		SendMessage(client, maxMessageSum)
 	})
