@@ -24,8 +24,12 @@ func StartTwichClient() {
 		if message.Message == os.Getenv("STOP_WORDS") {
 			os.Exit(0)
 		}
-		PlaySound()
-		SendMessage(client, maxMessageSum)
+		if os.Getenv("MUTE") == "yes" {
+			PlaySound()
+		}
+		if maxMessageSum != 0 {
+			SendMessage(client, maxMessageSum)
+		}
 	})
 
 	client.Join(os.Getenv("CHANNEL_NAME"))
